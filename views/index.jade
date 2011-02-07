@@ -1,0 +1,6 @@
+h1= title
+p Welcome to #{title}
+
+form( action:'/ask', method:'post' )
+  input( type:'text', name:'question-title', value:'Ask a question')
+  input( type:'submit', value: 'ask' )
