@@ -7,6 +7,7 @@ form( action:'/ask', method:'post' )
 
 - for (var index in questions)
   ul#questions
-    li#question= questions[index]['title']
-      p.time= questions[index]['time']
+    li#question
+      h1.title= questions[index]['title']
+      span.time= questions[index]['time']
      
