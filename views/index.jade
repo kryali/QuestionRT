@@ -8,6 +8,7 @@ form( action:'/ask', method:'post' )
 - for (var index in questions)
   ul#questions
     li#question
+      a(class='vote',href='#') vote!
       h1.title= questions[index]['title']
       span.time= questions[index]['time']
      
