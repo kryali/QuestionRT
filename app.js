@@ -10,9 +10,10 @@ var app = module.exports = express.createServer();
 var RedisStore = require('connect-redis');
 
 // Connect to the redis server
-var client = require("redis").createClient();
+var client = app.client = require("redis").createClient();
+var questions = app.questions = [];
 
-var questions = [];
+require('./routes.js').setRoutes(app);
 
 var time = new Date();
 questions.push({title:"What is the meaning of life?", time: time.getTime(), vote: 1});
@@ -38,42 +39,6 @@ app.configure('development', function(){
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-});
-
-// Routes
-
-app.get('/', function(req, res){
-  var questionList = client.get( 'Questions' );
-  time = new Date();
-  res.render('index', {
-    locals: {
-      title: 'Questions',
-      questions: questions 
-    }
-  });
-});
-
-app.post('/ask', function(req, res){
-  //client.set( time.getTime(), req.body['question-title']);
-  console.log( req.body['question-title']);
-  time = new Date();
-  var newQuestion = {title: req.body['question-title'], time:time.getTime(), vote: 1 };
-  questions.push(newQuestion);
-  io.broadcast({message:'question_add', 'new': newQuestion});
-  res.render('index', {
-    locals: {
-      title: 'Questions',
-      questions: questions 
-    }
-  });
-});
-
-app.get('/404', function(req, res){
-  res.render('404', {
-    locals: {
-      title: '404'
-    }
-  });
 });
 
 
