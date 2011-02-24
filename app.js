@@ -3,46 +3,23 @@
  * Module dependencies.
  */
 
-var fs = require('fs');
+fs = require('fs');
 io = require('socket.io');
 express = require('express');
 app = express.createServer();
-var RedisStore = require('connect-redis');
+RedisStore = require('connect-redis');
 
 // Connect to the redis server
-//var client = app.client = require("redis").createClient();
+//client = app.client = require("redis").createClient();
 questions = app.questions = [];
 
-require('./routes');
-//require('./routes.js');
 
 var time = new Date();
 questions.push({title:"What is the meaning of life?", time: time.getTime(), vote: 1});
 questions.push({title:"What room is your computer in?", time: time.getTime(), vote: 1});
 
-// Configuration
-
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyDecoder());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.cookieDecoder());
-  //app.use(express.session());
-  app.use(express.session({ secret: 'this is a secret'}));
-  //app.use(express.session({ store: new RedisStore , secret: 'this is a secret'}));
-  app.use(express.staticProvider(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
-});
-
-app.configure('production', function(){
-  app.use(express.errorHandler()); 
-});
-
+require('./config');
+require('./routes');
 
 
 // Only listen on $ node app.js
