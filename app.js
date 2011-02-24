@@ -4,16 +4,17 @@
  */
 
 var fs = require('fs');
-var io = require('socket.io');
-var express = require('express');
-var app = module.exports = express.createServer();
+io = require('socket.io');
+express = require('express');
+app = express.createServer();
 var RedisStore = require('connect-redis');
 
 // Connect to the redis server
-var client = app.client = require("redis").createClient();
-var questions = app.questions = [];
+//var client = app.client = require("redis").createClient();
+questions = app.questions = [];
 
-require('./routes.js').setRoutes(app);
+require('./routes');
+//require('./routes.js');
 
 var time = new Date();
 questions.push({title:"What is the meaning of life?", time: time.getTime(), vote: 1});
@@ -28,6 +29,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.cookieDecoder());
+  //app.use(express.session());
   app.use(express.session({ secret: 'this is a secret'}));
   //app.use(express.session({ store: new RedisStore , secret: 'this is a secret'}));
   app.use(express.staticProvider(__dirname + '/public'));
