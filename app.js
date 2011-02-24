@@ -9,16 +9,11 @@ express = require('express');
 app = express.createServer();
 RedisStore = require('connect-redis');
 
-// Connect to the redis server
-//client = app.client = require("redis").createClient();
-questions = app.questions = [];
 
-
-var time = new Date();
-questions.push({title:"What is the meaning of life?", time: time.getTime(), vote: 1});
-questions.push({title:"What room is your computer in?", time: time.getTime(), vote: 1});
-
+// Configuration 
 require('./config');
+
+// Routes
 require('./routes');
 
 
@@ -29,5 +24,4 @@ if (!module.parent) {
 }
 
 io = io.listen(app);
-io.on('connection', function(client){
-});
+io.on('connection', function(client){});
