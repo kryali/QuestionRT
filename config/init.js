@@ -1,4 +1,4 @@
-//client = app.client = require("redis").createClient();
+client = app.client = require("redis").createClient();
 questions = app.questions = [];
 
 var time = new Date();

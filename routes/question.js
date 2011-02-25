@@ -1,5 +1,13 @@
-  // Routes
-  app.get('/', function(req, res){
+function isLoggedIn(req, res, next){
+  if ( true ){
+    next();
+  } else {
+    next(new Error("Please login to do that"));
+  }
+}
+
+// Routes
+  app.get('/',  isLoggedIn, function(req, res){
     time = new Date();
     res.render('index', {
       locals: {
@@ -9,7 +17,7 @@
     });
   });
 
-  app.post('/ask', function(req, res, next){
+  app.post('/ask', isLoggedIn, function(req, res, next){
     time = new Date();
     var newQuestion = {title: 'test', time: time.getTime(), vote:1};
     questions.push(newQuestion);

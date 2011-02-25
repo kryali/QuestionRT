@@ -5,8 +5,7 @@
  * Module dependencies.
  */
 
-var app = require('../app')
-  , assert = require('assert');
+var app = require('../app') , assert = require('assert');
 
 
 module.exports = {

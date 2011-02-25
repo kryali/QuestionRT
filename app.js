@@ -2,13 +2,14 @@
 /**
  * Module dependencies.
  */
-
 fs = require('fs');
 io = require('socket.io');
 express = require('express');
 app = express.createServer();
 RedisStore = require('connect-redis');
 
+// Global Helpers
+require('./globalfn.js');
 
 // Configuration 
 require('./config');
