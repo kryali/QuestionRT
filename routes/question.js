@@ -5,7 +5,7 @@
       locals: {
         title: 'Questions',
         questions: app.questions,
-        user: req.session.user
+        user: req.session.user['username']
       }
     });
   });

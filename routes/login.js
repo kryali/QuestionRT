@@ -8,6 +8,26 @@ app.get('/login', function(req, res){
 
 app.post('/login', function(req,res, next){
   console.log(req.body['username'] + ":" + req.body['password']);
+  client.get(req.body['username'] + ":uid", function( e, uid){
+    if( !uid ){
+      res.writeHead(200);
+      res.end("Bad username!");
+      return;
+    }
+
+    client.get("uid:" + uid + ":password", function( e, hash){
+      if( !hash || (md5(req.body['password']) != hash) ){
+        res.writeHead(200);
+        res.end("Bad username!");
+        return;
+      } else {
+        req.session.user = { 'username':req.body['username'], 'uid':uid};
+        console.log("\n Setting user in session \n");
+        res.redirect('home');
+      }
+    });
+  });
+/*
   if(req.body['username'] != 'kiran' && req.body['password'] != 'ryali'){
     next(new Error("Authentication incorrect!"));
   }
@@ -19,6 +39,7 @@ app.post('/login', function(req,res, next){
       res.redirect('home');
     });
   }
+*/
 });
 
 app.get('/signup', function(req, res){
@@ -37,9 +58,9 @@ app.post('/signup', function(req, res, next){
     if( id != null){
       client.set("uid:"+id+":username", req.body['username']);
       client.set("uid:"+id+":password", md5(req.body['password']));
-      client.set("username:uid", id);
+      client.set(req.body['username'] + ":uid", id);
       client.incr("global:uid");
-      req.session.user = id;
+      req.session.user = {'username': req.body['username'], 'id' : id };
       res.redirect('home');
     }
     else{
