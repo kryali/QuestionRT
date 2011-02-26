@@ -13,7 +13,11 @@ app.post('/login', function(req,res, next){
     next(new Error("Authentication incorrect!"));
   }
   else{
-    req.session.user = [1,3]; 
-    res.end("Logged you in dawg");
+    req.session.regenerate(function(){
+      req.session.user = req.body['username'];
+      console.log("\nHello World\n");
+      console.log(req.session);
+      res.redirect('home');
+    });
   }
 });
