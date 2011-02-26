@@ -1,12 +1,4 @@
-function isLoggedIn(req, res, next){
-  if ( true ){
-    next();
-  } else {
-    next(new Error("Please login to do that"));
-  }
-}
-
-// Routes
+  // Routes
   app.get('/',  isLoggedIn, function(req, res){
     time = new Date();
     res.render('index', {

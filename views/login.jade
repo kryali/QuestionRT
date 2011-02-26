@@ -1,4 +1,6 @@
-form( action:'/login' method:'post' )
-  input( type: 'text', name:'username', value:'Your username')
-  input( type: 'text', name:'password', value:'Your password')
-  input( type: 'submit', value: 'login')
+#login
+  h1 Sign in
+  form( action:'/login', method:'post' )
+    input( type: 'text', name:'username', value:'Your username')
+    input( type: 'password', name:'password', value:'Your password')
+    input( type: 'submit', value: 'login')
