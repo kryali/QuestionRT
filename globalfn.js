@@ -1,5 +1,6 @@
 isLoggedIn = function(req, res, next){
-  if ( false ){
+  console.log(req.session);
+  if ( req.session.user ){
     next();
   } else {
     // Redirect to the login page
