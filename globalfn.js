@@ -4,7 +4,6 @@ isLoggedIn = function(req, res, next){
     next();
   } else {
     // Redirect to the login page
-    req.session.user = "none";
     res.redirect('login');
   }
 };

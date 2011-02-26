@@ -4,7 +4,8 @@
     res.render('index', {
       locals: {
         title: 'Questions',
-        questions: app.questions
+        questions: app.questions,
+        user: req.session.user
       }
     });
   });
