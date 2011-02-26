@@ -20,3 +20,30 @@ app.post('/login', function(req,res, next){
     });
   }
 });
+
+app.get('/signup', function(req, res){
+  res.render('signup', {
+    locals: {
+      title: 'Sign Up'
+    }
+  });
+});
+
+// Create a new user account and add it to the database
+app.post('/signup', function(req, res, next){
+
+  // Get a fresh uid from the database
+  client.get("global:uid", function( err, id){
+    if( id != null){
+      client.set("uid:"+id+":username", req.body['username']);
+      client.set("uid:"+id+":password", md5(req.body['password']));
+      client.set("username:uid", id);
+      client.incr("global:uid");
+      req.session.user = id;
+      res.redirect('home');
+    }
+    else{
+      next(new Error("Couldn't get id"));
+    }
+  });
+});

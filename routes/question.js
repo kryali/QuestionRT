@@ -12,15 +12,10 @@
 
   app.post('/ask', isLoggedIn, function(req, res, next){
     time = new Date();
-    var newQuestion = {title: 'test', time: time.getTime(), vote:1};
+    var newQuestion = {title: req.body['question'], time: time.getTime(), vote:1};
     questions.push(newQuestion);
     io.broadcast({message:'question_add', 'new': newQuestion});
-    res.render('index', {
-      locals: {
-        title: 'Questions',
-        questions: app.questions
-      }
-    });
+    //res.redirect('home');
   });
 
   app.get('/404', function(req, res){
