@@ -11,7 +11,7 @@ app = express.createServer();
 RedisStore = require('connect-redis');
 
 // Global Helpers
-require('./globalfn.js');
+require('./helper.js');
 
 // Configuration 
 require('./config');
