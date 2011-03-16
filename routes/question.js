@@ -18,8 +18,7 @@
                       time: time.getTime(), 
                       uid: req.session.user['uid'],
                       vote:1};
-
-    client.lpush("questions", newQuestion);
+    //client.lpush("questions", newQuestion);
     io.broadcast({message:'question_add', 'new': newQuestion});
     res.redirect('home');
   });

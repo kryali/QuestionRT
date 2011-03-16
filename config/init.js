@@ -9,6 +9,13 @@ client.get("questions", function(err, reply){
   }
 });
 
+// If global uid doesn't exist, then set it to zero
+client.get("global:uid", function(err, reply){
+  console.log("\nID: " + reply + "\n");
+  if( reply == null)
+    client.set("global:uid", 0);
+
+});
 
 // Dummy Data
 /*

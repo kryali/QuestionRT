@@ -1,3 +1,4 @@
+// Login screen
 app.get('/login', function(req, res){
   res.render('login', {
     locals: {
@@ -6,6 +7,7 @@ app.get('/login', function(req, res){
   });
 });
 
+// Grab the user from the database and verify that he exists
 app.post('/login', function(req,res, next){
   client.get(req.body['username'] + ":uid", function( e, uid){
     if( !uid ){
@@ -17,7 +19,7 @@ app.post('/login', function(req,res, next){
     client.get("uid:" + uid + ":password", function( e, hash){
       if( !hash || (md5(req.body['password']) != hash) ){
         res.writeHead(200);
-        res.end("Bad username!");
+        res.end("Bad Password!");
         return;
       } else {
         req.session.user = { 'username':req.body['username'], 'uid':uid};
@@ -42,6 +44,7 @@ app.post('/signup', function(req, res, next){
   // Get a fresh uid from the database
   client.get("global:uid", function( err, id){
     if( id != null){
+      console.log("\nCreating User #{req.body['username']}\n");
       client.set("uid:"+id+":username", req.body['username']);
       client.set("uid:"+id+":password", md5(req.body['password']));
       client.set(req.body['username'] + ":uid", id);
